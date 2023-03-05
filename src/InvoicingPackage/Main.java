@@ -27,6 +27,7 @@ public class Main {
 					System.out.println("1. Load Data");
 					System.out.println("2. Set Shop Name");
 					System.out.println("3. Back");
+					System.out.println("add invoice");
 					int choose = sr.nextInt();
 					switch (choose) {
 					case 1:
@@ -45,7 +46,12 @@ public class Main {
 
 					case 3:
 						manu1 = false;
+						
+					case 4:
+			          mathod.addInvoice();
+						break;
 					}
+
 
 				}
 			}

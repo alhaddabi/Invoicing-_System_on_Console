@@ -2,6 +2,11 @@ package InvoicingPackage;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -59,7 +64,7 @@ public class mathods {
 
 	public void AddItem() {
 	   	Items temitem = new Items();
-	    System.out.println("please Enter the items name ");
+	    System.out.println("Enter the invoice ID  ");
 	    String itemnam = sr.next();
 	    temitem.setItemaName(itemnam);
 	    System.out.println("Enter the items price");
@@ -87,8 +92,67 @@ public class mathods {
 			o.printStackTrace();
 			
 		}
+	}
+	    //////////////////////////////////////////////
+	    
+	    public void addInvoiceItems()
+	    {
+	    	invoice invoi = new invoice();
+	    	System.out.println("Enter the invoice Id");
+	    	int invoiceItemsId = sr.nextInt();
+	    	System.out.println("Enter the invoice ID");
+	    	int invoiceID = sr.nextInt();
+	    	System.out.println("Enter the items ID");
+	    	int itemsID = sr.nextInt();
+	    	System.out.println("Enter the item Name ");
+	    	String itemName = sr.next();
+	    	System.out.println("Enter the unit price ");
+	    	double unitPrice = sr.nextDouble();
+	    	
+	    	
+	    	
+	    	
+		    
+		    String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+					+ "trustServerCertificate=true";
+			String user = "sa";
+			String pass = "root";
+			
+			
+			Connection con = null;
+			
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+				con = DriverManager.getConnection(url, user, pass);
+				Statement st = con.createStatement();
+			
+		    String sql = "INSERT INTO InvoiceItems (Invoice_Id,Item_Id,Item_Name,UnitPrice,Quantity,Qty_Amount)"+
+		            "VALUES ("+"1, 1,"+ itemnam+","+price+","+itemnumber+","+itemId+ ")";
+		    System.out.println(sql);
+
+			Integer m = st.executeUpdate(sql);
+			if (m >= 1) {
+				System.out.println("inserted successfully : " + sql);
+			} else {
+				System.out.println("insertion failed");
+			}
+			String sql1 = "Select * from Employee_Type";
+			ResultSet resultSet = st.executeQuery(sql1);
+		    
+			con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+			 
+			}
+		
+	    	
 	
-	    }
+
+	
+
+	
 	
 	public void printCustomerName() 
 	{
@@ -178,7 +242,100 @@ public class mathods {
 		int customerPhomeNumber = sr.nextInt();
 		customer.setCustomerPhoneNumber(customerPhomeNumber);
 		customerList.add(customer);
+		
+		
+		  String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+					+ "trustServerCertificate=true";
+			String user = "sa";
+			String pass = "root";
+			
+			
+			Connection con = null;
+			
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+				con = DriverManager.getConnection(url, user, pass);
+				Statement st = con.createStatement();
+			
+		    String sql = "INSERT INTO Customers (Customer_Full_Name,Customer_Phone_Number)"
+		
+		            +"VALUES ('"+customerName+"','"+customerPhomeNumber+"')";
+		    System.out.println(sql);
+
+			Integer m = st.executeUpdate(sql);
+			if (m >= 1) {
+				System.out.println("inserted successfully : " + sql);
+			} else {
+				System.out.println("insertion failed");
+			}
+			String sql1 = "Select * from Employee_Type";
+			ResultSet resultSet = st.executeQuery(sql1);
+		    
+			con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+			 
+			}
+////////////////////////////////////////////////////////////////////////////////INVOICE////////////////////////////////////////////////////////////////////////////////////////////
+	public void addInvoice()
+	{		
+		System.out.println("Enter the invoice id ");
+		int invoiceId = sr.nextInt();
+		System.out.println("Enter the customer ID ");
+		int customerId = sr.nextInt();
+		System.out.println("enter the invoice Date");
+		String invoiceDate = sr.next();
+		System.out.println("Enter number of Items");
+		int itemsNumber = sr.nextInt();
+		System.out.println("Enter the total amount");
+		double totalAmount = sr.nextDouble();
+		System.out.println("Enter the paid amount ");
+		double paidAmount = sr.nextDouble();
+		System.out.println("Enter the total balance");
+		double totalbalance = sr.nextDouble();
+		
+		
+		
+
+		  String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+					+ "trustServerCertificate=true";
+			String user = "sa";
+			String pass = "root";
+			
+			
+			Connection con = null;
+			
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+				con = DriverManager.getConnection(url, user, pass);
+				Statement st = con.createStatement();
+			
+		    String sql = "INSERT INTO Invoices (Invoice_Id,Customer_Id,Invoice_Date,Number_Of_Items,total_Amount,paid_Amount,totkal_Balance)"
+		
+		  +"VALUES ("+invoiceId+","+customerId+",'"+invoiceDate+"',"+itemsNumber + "," +totalAmount+","+ paidAmount+","+totalbalance+")";
+		    System.out.println(sql);
+
+			Integer m = st.executeUpdate(sql);
+			if (m >= 1) {
+				System.out.println("inserted successfully : " + sql);
+			} else {
+				System.out.println("insertion failed");
+			}
+			String sql1 = "Select * from Employee_Type";
+			ResultSet resultSet = st.executeQuery(sql1);
+		    
+			con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+
 	}
+	
+	
+
 	
 	public void printcustomer()
 	{

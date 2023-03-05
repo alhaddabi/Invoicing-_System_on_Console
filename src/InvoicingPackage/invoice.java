@@ -6,12 +6,21 @@ public class invoice {
 	
 	ArrayList<Items> itemsList = new ArrayList<Items>();
 	
-	
+	private int invoiceId ;
 	private int invoicDate ;
 	private int numberOfItems ;
 	private int totalAmount ;
 	private int paidAmount ;
 	private int totalBalanc ;
+	
+	
+	
+	public int getInvoiceId() {
+		return invoiceId;
+	}
+	public void setInvoiceId(int invoiceId) {
+		this.invoiceId = invoiceId;
+	}
 	public int getInvoicDate() {
 		return invoicDate;
 	}

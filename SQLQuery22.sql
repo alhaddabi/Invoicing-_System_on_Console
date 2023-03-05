@@ -5,7 +5,7 @@ CREATE TABLE Customers (
 );
 
 CREATE TABLE Invoices (
-  Invoice_Id INT PRIMARY KEY IDENTITY,
+  Invoice_Id INT PRIMARY KEY ,
   Customer_Id INT,
   Invoice_Date DATE,
   Number_Of_Items INT,
@@ -16,7 +16,7 @@ CREATE TABLE Invoices (
 );
 
 CREATE TABLE InvoiceItems (
-  InvoiceItem_Id INT PRIMARY KEY IDENTITY,
+  InvoiceItem_Id INT PRIMARY KEY ,
   Invoice_Id INT,
   Item_Id INT,
   Item_Name VARCHAR(50),
@@ -25,6 +25,10 @@ CREATE TABLE InvoiceItems (
   Qty_Amount DECIMAL(10,2),
   FOREIGN KEY (Invoice_Id) REFERENCES Invoices(Invoice_Id)
 );
+
+drop table Customers ;
+drop table Invoices ;
+drop table InvoiceItems ;
 
 
 

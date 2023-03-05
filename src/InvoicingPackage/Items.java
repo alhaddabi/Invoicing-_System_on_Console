@@ -12,6 +12,9 @@ public class Items {
 	private double unitPrice ;
 	private int numberOfItems ;
 	private int itemsPrice ;
+	
+	
+	
 	public int getIteamId() {
 		return iteamId;
 	}
