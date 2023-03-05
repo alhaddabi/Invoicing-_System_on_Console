@@ -19,6 +19,7 @@ public class Main {
 			System.out.println("1- Shop Settings");
 			System.out.println("2- Manage Shop Items");
 			System.out.println("3- EXIT");
+			System.out.println("4- creating the table in the dataBase");
 			int switch1 = sr.nextInt();
 
 			if (switch1 == 1) {
@@ -59,19 +60,19 @@ public class Main {
 			else if (switch1 == 2) {
 				boolean manu2 = true;
 				while (manu2) {
-					System.out.println("1. Add Items");
+					System.out.println("1. Add customer");
 					System.out.println("2. Delete Items");
 					System.out.println("3. Change Item Price");
 					System.out.println("4. Report: All Invoices");
 					System.out.println("5. Report: Statistics)");
 					System.out.println("6. Program Statistics (Print each Main Menu Item with how many number selected).");
-					System.out.println("7. Go Back");
+					System.out.println("7. addInvoiceItems");
+					System.out.println("8. Go Back");
 					int choose1 = sr.nextInt();
 					switch (choose1) {
 					case 1:
 						System.out.println("=====FIRST Enter the customer details=====");
 						mathod.ADDcustomer();
-						mathod.AddItem();
 						break;
 					case 2:
 						mathod.deleteItems();
@@ -101,8 +102,12 @@ public class Main {
 					case 6:
 						System.out.println("menu count for main menu is "+menuCount+" time");
 						break;
-
+						
 					case 7:
+						mathod.addInvoiceItems();
+						break;
+
+					case 8:
 						manu2 = false;
 						break;
 
@@ -121,6 +126,18 @@ public class Main {
 			}
 
 		}
+			else if (switch1 == 5)
+			{
+				mathod.printCustomerDataBase();
+				mathod.printinvoiceDataBase();
+				mathod.printInvoiceItems();
+				break;
+			}
+			else if(switch1 == 4)
+			{
+				mathod.createTables();
+				break;
+			}
 		}
 
 		sr.close();

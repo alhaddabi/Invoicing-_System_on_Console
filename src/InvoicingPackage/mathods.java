@@ -1,4 +1,5 @@
 package InvoicingPackage;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -101,18 +102,21 @@ public class mathods {
 	    	System.out.println("Enter the invoice Id");
 	    	int invoiceItemsId = sr.nextInt();
 	    	System.out.println("Enter the invoice ID");
-	    	int invoiceID = sr.nextInt();
+	    	int invoiceId = sr.nextInt();
 	    	System.out.println("Enter the items ID");
 	    	int itemsID = sr.nextInt();
 	    	System.out.println("Enter the item Name ");
 	    	String itemName = sr.next();
 	    	System.out.println("Enter the unit price ");
 	    	double unitPrice = sr.nextDouble();
+	    	System.out.println("Enter the quantity ");
+	    	int quantity = sr.nextInt();
+	    	System.out.println("Enter the quantity amount ");
+	    	int quantityAmount = sr.nextInt();
+	    	InvoicList.add(invoi);
 	    	
 	    	
-	    	
-	    	
-		    
+
 		    String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
 					+ "trustServerCertificate=true";
 			String user = "sa";
@@ -127,8 +131,8 @@ public class mathods {
 				con = DriverManager.getConnection(url, user, pass);
 				Statement st = con.createStatement();
 			
-		    String sql = "INSERT INTO InvoiceItems (Invoice_Id,Item_Id,Item_Name,UnitPrice,Quantity,Qty_Amount)"+
-		            "VALUES ("+"1, 1,"+ itemnam+","+price+","+itemnumber+","+itemId+ ")";
+		    String sql = "INSERT INTO InvoiceItems (InvoiceItem_Id,Invoice_Id,Item_Id,Item_Name,UnitPrice,Quantity,Qty_Amount)"+
+		            "VALUES ("+invoiceItemsId+","+invoiceId+","+itemsID+",'"+itemName+"',"+unitPrice+","+quantity+","+quantityAmount+ ")";
 		    System.out.println(sql);
 
 			Integer m = st.executeUpdate(sql);
@@ -376,5 +380,193 @@ public class mathods {
 		countItems();
 		totalsales();
 	}
+	/////////////////////////////////////////////////////////////show dataBase//////////////////////////////////////////////////////////////////////////
 	
+   public void printCustomerDataBase()
+   {
+	  String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+				+ "trustServerCertificate=true";
+		String user = "sa";
+		String pass = "root";
+		
+		
+		Connection con = null;
+		
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			con = DriverManager.getConnection(url, user, pass);
+			Statement st = con.createStatement();
+		
+	    String sql = "select * from customers" ;
+	
+		ResultSet resultSet = st.executeQuery(sql);
+		while (resultSet.next())
+		{
+			System.out.println("Id = " + resultSet.getString("Customer_Id"));
+			System.out.println("customer name = " + resultSet.getString("Customer_Full_Name"));
+			System.out.println("phone number = " + resultSet.getString("Customer_Phone_Number"));
+
+			
+		}
+	    
+		con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+   }
+   
+   
+   public void printinvoiceDataBase()
+   {
+	   
+	   
+	   String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+				+ "trustServerCertificate=true";
+		String user = "sa";
+		String pass = "root";
+		
+		
+		Connection con = null;
+		
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			con = DriverManager.getConnection(url, user, pass);
+			Statement st = con.createStatement();
+		
+	    String sql = "select * from Invoices" ;
+	
+		ResultSet resultSet = st.executeQuery(sql);
+		while (resultSet.next())
+		{
+			System.out.println("Id = " + resultSet.getString("Invoice_Id"));
+			System.out.println("customer name = " + resultSet.getString("Customer_Id"));
+			System.out.println("phone number = " + resultSet.getString("Invoice_Date"));
+			System.out.println("phone number = " + resultSet.getString("Number_Of_Items"));
+			System.out.println("phone number = " + resultSet.getString("total_Amount"));
+			System.out.println("phone number = " + resultSet.getString("totkal_Balance"));
+}
+	    
+		con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}  
+   }
+   
+   public void printInvoiceItems()
+   {
+	   
+	   String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+				+ "trustServerCertificate=true";
+		String user = "sa";
+		String pass = "root";
+		
+		
+		Connection con = null;
+		
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			con = DriverManager.getConnection(url, user, pass);
+			Statement st = con.createStatement();
+		
+	    String sql = "select * from InvoiceItems" ;
+	
+		ResultSet resultSet = st.executeQuery(sql);
+		while (resultSet.next())
+		{
+			System.out.println("Id = " + resultSet.getString("InvoiceItem_Id"));
+			System.out.println("customer name = " + resultSet.getString("Invoice_Id"));
+			System.out.println("phone number = " + resultSet.getString("Item_Id"));
+			System.out.println("phone number = " + resultSet.getString("Item_Name"));
+			System.out.println("phone number = " + resultSet.getString("UnitPrice"));
+			System.out.println("phone number = " + resultSet.getString("Quantity"));
+			System.out.println("phone number = " + resultSet.getString("Qty_Amount"));
+}
+	    
+		con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}  
+	   
+	   
+   }
+   
+   
+   
+//////////////////////////////////////////////////creating table in the DataBase/////////////////////////////////////////////////////////////////////////
+	public void createTables()
+	{
+    String url = "jdbc:sqlserver://localhost:1433;" +"databaseName=test1;" +"encrypt=true;" +"trustServerCertificate=true";
+    String user = "sa";
+    String pass = "root";
+Connection con = null;
+    try {
+Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+DriverManager.registerDriver(driver);
+        con = DriverManager.getConnection(url, user, pass);
+Statement st = con.createStatement();
+//////////////////////////// the firts table ////////////////////////////
+
+//	 "CREATE TABLE Customers "
+//	 + "(Customer_Id INT PRIMARY KEY IDENTITY, " +
+//     "Customer_Full_Name VARCHAR(25) NOT NULL, " +
+//     "Customer_Phone_Number VARCHAR(10));"
+//
+////////////////////////////////////////////the secound table ///////////////////////////
+//    +"CREATE TABLE Invoices (Invoice_Id INT PRIMARY KEY ,"
+//    + "Customer_Id int REFERENCES Customer_Id(id),"
+//    + "Invoice_Date VARCHAR(255),"
+//    + "total_Amount int," + "paid_Amount int not null ,"
+//    + "total_Balance_invoice int NOT NULL);"
+//
+/////////////////////////////////// the 3 table ///////////////////////////////////////
+//    +"CREATE TABLE InvoiceItems (\r\n"
+//    + " InvoiceItem_Id INTEGER PRIMARY KEY,"
+//    + " Invoice_Id INTEGER REFERENCES Invoice_Id(id),"
+//    + " Customer_Id INTEGER REFERENCES Customer_Id(id),"
+//    + " Number_Of_Items int NOT NULL,\r\n"
+//    + " total_Amount int,"
+//    + " paid_Amount DECIMAL,"
+//    + " total_Balance DECIMAL NOT NULL ,";
+String sql =  " CREATE TABLE Customers (\r\n"
++ " Customer_Id INT PRIMARY KEY IDENTITY,\r\n"
++ " Customer_Full_Name VARCHAR(25) NOT NULL,\r\n"
++ "Customer_Phone_Number VARCHAR(10))"
++ ");\r\n"
+
+///////////////////////////the 5 table ////////////////////////////////////////////
++ " CREATE TABLE Invoices (\r\n"
++ " Invoice_Id INT PRIMARY KEY,\r\n"
++ " Customer_Id int REFERENCES Customer_Id(id),\r\n"
++ " Invoice_Date VARCHAR(255),\r\n"
++ " total_Amount int,\r\n"
++ " paid_Amount int,"+"total_Balance_invoice int"
++ ");\r\n"
++ "\r\n"
+/////////////////////////////the 6 table ////////////////////////////////////////////
++ " CREATE TABLE InvoiceItems (\r\n"
++ " InvoiceItem_Id INTEGER PRIMARY KEY,\r\n"
++ "Invoice_Id INTEGER REFERENCES Invoice_Id(id),\r\n"
++ " Customer_Id INTEGER REFERENCES Customer_Id(id),\r\n"
++ " Number_Of_Items int NOT NULL,\r\n"
++ " total_Amount int,\r\n"
++ " paid_Amount DECIMAL,\r\n"
++ " total_Balance DECIMAL NOT NULL,\r\n"
++ ");";
+
+Integer m = st.executeUpdate(sql);
+        if (m >= 1) {
+System.out.println("inserted successfully : " + sql);
+} else {
+System.out.println("insertion failed");
+}
+
+        con.close();
+} catch (Exception ex) {
+System.err.println(ex);
+}		    
+     }
+
 }
