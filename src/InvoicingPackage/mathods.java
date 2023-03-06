@@ -187,6 +187,82 @@ public class mathods {
 		System.out.println("the item removed");
 	}
 	
+	public void deletDataBase()
+	{
+	 String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+				+ "trustServerCertificate=true";
+		String user = "sa";
+		String pass = "root";
+		
+		
+		Connection con = null;
+		
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			con = DriverManager.getConnection(url, user, pass);
+			Statement st = con.createStatement();
+		System.out.println("Enter the Item ID ");
+	    String sql = "DELETE FROM [dbo].[InvoiceItems]\r\n"
+	    		+ "      WHERE Item_Id= "+ sr.nextInt() ;
+	    System.out.println(sql);
+
+		Integer m = st.executeUpdate(sql);
+		if (m >= 1) {
+			System.out.println("inserted successfully : " + sql);
+		} else {
+			System.out.println("insertion failed");
+		}
+		
+	    
+		con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+	
+	}
+	
+	
+	public void updateDataBsePrice()
+	{
+		 String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+					+ "trustServerCertificate=true";
+			String user = "sa";
+			String pass = "root";
+			
+			
+			Connection con = null;
+			
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+				con = DriverManager.getConnection(url, user, pass);
+				Statement st = con.createStatement();
+			System.out.println("Enter the Item ID ");
+			int Item_id = sr.nextInt();
+			System.out.println("Enter the new price");
+			double newPrice = sr.nextDouble();
+		    String sql = "UPDATE [dbo].[InvoiceItems]\r\n"
+		    		+ "   SET[UnitPrice] = "+ newPrice
+		    		+ " WHERE Item_Id = " + Item_id ;
+		    System.out.println(sql);
+
+			Integer m = st.executeUpdate(sql);
+			if (m >= 1) {
+				System.out.println("inserted successfully : " + sql);
+			} else {
+				System.out.println("insertion failed");
+			}
+			
+		    
+			con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+	}
+	
+	
+	
 	public void changeitemprice()
 	{
 		System.out.println("Enter the ID number to iteam you want to change ");
@@ -272,10 +348,7 @@ public class mathods {
 				System.out.println("inserted successfully : " + sql);
 			} else {
 				System.out.println("insertion failed");
-			}
-			String sql1 = "Select * from Employee_Type";
-			ResultSet resultSet = st.executeQuery(sql1);
-		    
+			}		    
 			con.close();
 			} catch (Exception ex) {
 				System.err.println(ex);
@@ -328,13 +401,40 @@ public class mathods {
 			} else {
 				System.out.println("insertion failed");
 			}
-			String sql1 = "Select * from Employee_Type";
-			ResultSet resultSet = st.executeQuery(sql1);
-		    
 			con.close();
 			} catch (Exception ex) {
 				System.err.println(ex);
 			}
+
+	}
+	
+	public void invoiceheardr()
+	{
+		invoice temInvoic = new invoice();
+	    System.out.println("please Enter the invoice Fax number ");
+	    int invoiceFax = sr.nextInt();
+	    temInvoic.setFax(invoiceFax);
+	    System.out.println("Enter the invoice tel");
+	    int invoiceTel = sr.nextInt();
+	    temInvoic.setTel(invoiceTel);
+	    System.out.println("please Enter the invoice Email");
+	    String invoiceEmail = sr.next();
+	    temInvoic.setEmail(invoiceEmail);
+	    System.out.println("Enter the todays date '__'/1/2023");
+	    int date = sr.nextInt();
+	    temInvoic.setInvoicDate(date);
+	    InvoicList.add(temInvoic);
+	}
+	
+	public void printInvoicingHeader()
+	{
+		for(invoice  a : InvoicList)
+		{
+			System.out.println("Fax is : "+a.getFax());
+			System.out.println("tel number is : "+a.getTel());
+			System.out.println("Fax is : "+a.getEmail());
+
+		}
 
 	}
 	
@@ -441,11 +541,11 @@ public class mathods {
 		while (resultSet.next())
 		{
 			System.out.println("Id = " + resultSet.getString("Invoice_Id"));
-			System.out.println("customer name = " + resultSet.getString("Customer_Id"));
-			System.out.println("phone number = " + resultSet.getString("Invoice_Date"));
-			System.out.println("phone number = " + resultSet.getString("Number_Of_Items"));
-			System.out.println("phone number = " + resultSet.getString("total_Amount"));
-			System.out.println("phone number = " + resultSet.getString("totkal_Balance"));
+			System.out.println("Customer_Id = " + resultSet.getString("Customer_Id"));
+			System.out.println("Invoice_Date = " + resultSet.getString("Invoice_Date"));
+			System.out.println("Number_Of_Items = " + resultSet.getString("Number_Of_Items"));
+			System.out.println("total_Amount = " + resultSet.getString("total_Amount"));
+			System.out.println("totkal_Balancer = " + resultSet.getString("totkal_Balance"));
 }
 	    
 		con.close();
@@ -477,12 +577,12 @@ public class mathods {
 		while (resultSet.next())
 		{
 			System.out.println("Id = " + resultSet.getString("InvoiceItem_Id"));
-			System.out.println("customer name = " + resultSet.getString("Invoice_Id"));
-			System.out.println("phone number = " + resultSet.getString("Item_Id"));
-			System.out.println("phone number = " + resultSet.getString("Item_Name"));
-			System.out.println("phone number = " + resultSet.getString("UnitPrice"));
-			System.out.println("phone number = " + resultSet.getString("Quantity"));
-			System.out.println("phone number = " + resultSet.getString("Qty_Amount"));
+			System.out.println("Invoice_Id = " + resultSet.getString("Invoice_Id"));
+			System.out.println("Item_Id = " + resultSet.getString("Item_Id"));
+			System.out.println("Item_Name = " + resultSet.getString("Item_Name"));
+			System.out.println("UnitPrice = " + resultSet.getString("UnitPrice"));
+			System.out.println("Quantity = " + resultSet.getString("Quantity"));
+			System.out.println("Qty_Amount = " + resultSet.getString("Qty_Amount"));
 }
 	    
 		con.close();
@@ -507,34 +607,12 @@ Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDr
 DriverManager.registerDriver(driver);
         con = DriverManager.getConnection(url, user, pass);
 Statement st = con.createStatement();
-//////////////////////////// the firts table ////////////////////////////
 
-//	 "CREATE TABLE Customers "
-//	 + "(Customer_Id INT PRIMARY KEY IDENTITY, " +
-//     "Customer_Full_Name VARCHAR(25) NOT NULL, " +
-//     "Customer_Phone_Number VARCHAR(10));"
-//
-////////////////////////////////////////////the secound table ///////////////////////////
-//    +"CREATE TABLE Invoices (Invoice_Id INT PRIMARY KEY ,"
-//    + "Customer_Id int REFERENCES Customer_Id(id),"
-//    + "Invoice_Date VARCHAR(255),"
-//    + "total_Amount int," + "paid_Amount int not null ,"
-//    + "total_Balance_invoice int NOT NULL);"
-//
-/////////////////////////////////// the 3 table ///////////////////////////////////////
-//    +"CREATE TABLE InvoiceItems (\r\n"
-//    + " InvoiceItem_Id INTEGER PRIMARY KEY,"
-//    + " Invoice_Id INTEGER REFERENCES Invoice_Id(id),"
-//    + " Customer_Id INTEGER REFERENCES Customer_Id(id),"
-//    + " Number_Of_Items int NOT NULL,\r\n"
-//    + " total_Amount int,"
-//    + " paid_Amount DECIMAL,"
-//    + " total_Balance DECIMAL NOT NULL ,";
 String sql =  " CREATE TABLE Customers (\r\n"
 + " Customer_Id INT PRIMARY KEY IDENTITY,\r\n"
 + " Customer_Full_Name VARCHAR(25) NOT NULL,\r\n"
 + "Customer_Phone_Number VARCHAR(10))"
-+ ");\r\n"
++ ");"
 
 ///////////////////////////the 5 table ////////////////////////////////////////////
 + " CREATE TABLE Invoices (\r\n"
@@ -543,8 +621,7 @@ String sql =  " CREATE TABLE Customers (\r\n"
 + " Invoice_Date VARCHAR(255),\r\n"
 + " total_Amount int,\r\n"
 + " paid_Amount int,"+"total_Balance_invoice int"
-+ ");\r\n"
-+ "\r\n"
++ ");"
 /////////////////////////////the 6 table ////////////////////////////////////////////
 + " CREATE TABLE InvoiceItems (\r\n"
 + " InvoiceItem_Id INTEGER PRIMARY KEY,\r\n"
@@ -553,8 +630,7 @@ String sql =  " CREATE TABLE Customers (\r\n"
 + " Number_Of_Items int NOT NULL,\r\n"
 + " total_Amount int,\r\n"
 + " paid_Amount DECIMAL,\r\n"
-+ " total_Balance DECIMAL NOT NULL,\r\n"
-+ ");";
++ " total_Balance DECIMAL NOT NULL,)";
 
 Integer m = st.executeUpdate(sql);
         if (m >= 1) {

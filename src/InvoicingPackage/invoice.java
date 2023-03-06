@@ -12,9 +12,31 @@ public class invoice {
 	private int totalAmount ;
 	private int paidAmount ;
 	private int totalBalanc ;
+	private int fax ;
+	private int tel ;
+	private String email ;
 	
 	
 	
+	
+	public int getFax() {
+		return fax;
+	}
+	public void setFax(int fax) {
+		this.fax = fax;
+	}
+	public int getTel() {
+		return tel;
+	}
+	public void setTel(int tel) {
+		this.tel = tel;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getInvoiceId() {
 		return invoiceId;
 	}
