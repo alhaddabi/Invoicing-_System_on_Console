@@ -8,6 +8,7 @@ public class invoice {
 	
 	private int invoiceId ;
 	private int invoicDate ;
+	private int invoice_phone ;
 	private int numberOfItems ;
 	private int totalAmount ;
 	private int paidAmount ;
@@ -19,6 +20,19 @@ public class invoice {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	public int getInvoice_phone() {
+		return invoice_phone;
+	}
+	public void setInvoice_phone(int invoice_phone) {
+		this.invoice_phone = invoice_phone;
+	}
 	public int getFax() {
 		return fax;
 	}

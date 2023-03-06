@@ -26,6 +26,16 @@ CREATE TABLE InvoiceItems (
   FOREIGN KEY (Invoice_Id) REFERENCES Invoices(Invoice_Id)
 );
 
+create table Invoice_header (
+Invoice_header_ID int primary key ,
+  Invoice_Id INT ,
+Invoice_Fax int ,
+Invoice_phone int ,
+Invoice_Email varchar(50) ,
+Invoice_Data varchar(20),
+  FOREIGN KEY (Invoice_Id) REFERENCES Invoices(Invoice_Id)
+)
+
 drop table Customers ;
 drop table Invoices ;
 drop table InvoiceItems ;

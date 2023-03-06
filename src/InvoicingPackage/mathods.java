@@ -62,46 +62,13 @@ public class mathods {
 	
 	////////////////////////////////////////////////////ITEMS//////////////////////////////////////////////////////////////////////////////////
 	
-
-	public void AddItem() {
-	   	Items temitem = new Items();
-	    System.out.println("Enter the invoice ID  ");
-	    String itemnam = sr.next();
-	    temitem.setItemaName(itemnam);
-	    System.out.println("Enter the items price");
-	    double price = sr.nextDouble();
-	    temitem.setUnitPrice(price);
-	    System.out.println("please Enter the number of iteams");
-	    int itemnumber = sr.nextInt();
-	    temitem.setNumbverOfItems(itemnumber);
-  //  System.out.println("item ID is automaticlyy generated based on the indext ");
-	    int itemId = itemList.size();
-	    temitem.setIteamId(itemId);
-	    itemList.add(temitem);
-	    try
-	    {
-	    	BufferedWriter writer = new BufferedWriter(new FileWriter("item_output2.txt"));
-	    	for(Items a : itemList)
-			{
-				writer.write("the Customer name is : "+a.getItemaName()+"======\n");
-				writer.write("the item price is :    "+a.getItemsPrice()+"======\n");
-				writer.write("the item number is :   "+a.getNumbverOfItems()+"======\n");
-				writer.write("the item ID is :       "+a.getIteamId()+"======\n");
-			}
-	    	writer.close();
-	    }catch (IOException o) {		
-			o.printStackTrace();
-			
-		}
-	}
-	    //////////////////////////////////////////////
 	    
 	    public void addInvoiceItems()
 	    {
 	    	invoice invoi = new invoice();
-	    	System.out.println("Enter the invoice Id");
+	    	System.out.println("Enter the invoice_item_Id");
 	    	int invoiceItemsId = sr.nextInt();
-	    	System.out.println("Enter the invoice ID");
+	    	System.out.println("Enter the previes invoice ID");
 	    	int invoiceId = sr.nextInt();
 	    	System.out.println("Enter the items ID");
 	    	int itemsID = sr.nextInt();
@@ -141,8 +108,6 @@ public class mathods {
 			} else {
 				System.out.println("insertion failed");
 			}
-			String sql1 = "Select * from Employee_Type";
-			ResultSet resultSet = st.executeQuery(sql1);
 		    
 			con.close();
 			} catch (Exception ex) {
@@ -178,14 +143,6 @@ public class mathods {
 		}
 	}
 	
-	public void deleteItems()
-	{
-		System.out.println("Enter the id number to remove");
-		int indextnumber = sr.nextInt();
-		itemList.get(indextnumber);// get or set . arrayList is always based on the indext number (what every number you type i'll consider as indext )
-		itemList.remove(indextnumber);
-		System.out.println("the item removed");
-	}
 	
 	public void deletDataBase()
 	{
@@ -411,20 +368,66 @@ public class mathods {
 	public void invoiceheardr()
 	{
 		invoice temInvoic = new invoice();
-	    System.out.println("please Enter the invoice Fax number ");
-	    int invoiceFax = sr.nextInt();
-	    temInvoic.setFax(invoiceFax);
-	    System.out.println("Enter the invoice tel");
-	    int invoiceTel = sr.nextInt();
-	    temInvoic.setTel(invoiceTel);
-	    System.out.println("please Enter the invoice Email");
-	    String invoiceEmail = sr.next();
-	    temInvoic.setEmail(invoiceEmail);
+	    System.out.println("please Enter the Invoice_header_ID ");
+	    int invoice_id_header = sr.nextInt();
+	  
+	    System.out.println("Enter the invoice_ID");
+        int Invoice_id = sr.nextInt();
+   
+	    System.out.println("Enter the invoice_fax");
+	    int invoice_fax = sr.nextInt();
+     
+	    System.out.println(" Enter the invoice phone");
+	    int invoice_phone = sr.nextInt();
+	    
+	    System.out.println("Enter the invoice Email");
+	    String invoice_Email = sr.next();
+	 
 	    System.out.println("Enter the todays date '__'/1/2023");
 	    int date = sr.nextInt();
-	    temInvoic.setInvoicDate(date);
+	
 	    InvoicList.add(temInvoic);
+	    
+	    
+	    String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+				+ "trustServerCertificate=true";
+		String user = "sa";
+		String pass = "root";
+		
+		
+		Connection con = null;
+		
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			con = DriverManager.getConnection(url, user, pass);
+			Statement st = con.createStatement();
+		
+	    String sql ="INSERT INTO Invoice_header (Invoice_header_ID,Invoice_Id,Invoice_Fax,Invoice_phone,Invoice_Email,Invoice_Data)"
+	
+	  +"VALUES ("+invoice_id_header+","+Invoice_id+","+invoice_fax+","+invoice_phone + ",'" +invoice_Email+"','"+ date+"');";
+	    System.out.println(sql);
+
+		Integer m = st.executeUpdate(sql);
+		if (m >= 1) {
+			System.out.println("inserted successfully : " + sql);
+		} else {
+			System.out.println("insertion failed");
+		}
+		con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void printInvoicingHeader()
 	{
@@ -481,6 +484,53 @@ public class mathods {
 		totalsales();
 	}
 	/////////////////////////////////////////////////////////////show dataBase//////////////////////////////////////////////////////////////////////////
+	
+	public void printInvoiceHeader()
+	{
+		
+		
+
+		  String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+					+ "trustServerCertificate=true";
+			String user = "sa";
+			String pass = "root";
+			
+			
+			Connection con = null;
+			
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+				con = DriverManager.getConnection(url, user, pass);
+				Statement st = con.createStatement();
+			
+		    String sql = "select * from Invoice_header" ;
+		
+			ResultSet resultSet = st.executeQuery(sql);
+			while (resultSet.next())
+			{
+				System.out.println("Invoice_header_ID = " + resultSet.getString("Invoice_header_ID"));
+				System.out.println("Invoice_Id = " + resultSet.getString("Invoice_Id"));
+				System.out.println("Invoice_Fax = " + resultSet.getString("Invoice_Fax"));
+				System.out.println("Invoice_phone = " + resultSet.getString("Invoice_phone"));
+				System.out.println("Invoice_Email = " + resultSet.getString("Invoice_Email"));
+				System.out.println("Invoice_Data = " + resultSet.getString("Invoice_Data"));
+
+				
+			}
+		    
+			con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+		
+		
+		
+		
+		
+	}
+	
+	
 	
    public void printCustomerDataBase()
    {
@@ -545,7 +595,7 @@ public class mathods {
 			System.out.println("Invoice_Date = " + resultSet.getString("Invoice_Date"));
 			System.out.println("Number_Of_Items = " + resultSet.getString("Number_Of_Items"));
 			System.out.println("total_Amount = " + resultSet.getString("total_Amount"));
-			System.out.println("totkal_Balancer = " + resultSet.getString("totkal_Balance"));
+			System.out.println("total_Balancer = " + resultSet.getString("totkal_Balance"));
 }
 	    
 		con.close();
@@ -612,7 +662,7 @@ String sql =  " CREATE TABLE Customers (\r\n"
 + " Customer_Id INT PRIMARY KEY IDENTITY,\r\n"
 + " Customer_Full_Name VARCHAR(25) NOT NULL,\r\n"
 + "Customer_Phone_Number VARCHAR(10))"
-+ ");"
++ ";"
 
 ///////////////////////////the 5 table ////////////////////////////////////////////
 + " CREATE TABLE Invoices (\r\n"
@@ -630,7 +680,7 @@ String sql =  " CREATE TABLE Customers (\r\n"
 + " Number_Of_Items int NOT NULL,\r\n"
 + " total_Amount int,\r\n"
 + " paid_Amount DECIMAL,\r\n"
-+ " total_Balance DECIMAL NOT NULL,)";
++ " total_Balance DECIMAL NOT NULL)";
 
 Integer m = st.executeUpdate(sql);
         if (m >= 1) {
