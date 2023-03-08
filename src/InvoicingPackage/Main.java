@@ -46,7 +46,8 @@ public class Main {
 			System.out.println("2- Manage Shop Items");
 			System.out.println("3- creating the table in the dataBase");
 			System.out.println("4. Get all the dataBase information ");
-			System.out.println("5- EXIT");
+			System.out.println("5. Find the Invoice ");
+			System.out.println("6- EXIT");
 			int switch1 = sr.nextInt();
 
 			if (switch1 == 1) {
@@ -208,8 +209,14 @@ public class Main {
 				mathod.printInvoiceHeader();
 				break;
 			}
+			
+			else if (switch1 == 5)
+			{
+				mathod.findInvoice();
+				break;
+			}
 
-		else if (switch1 == 5)
+		else if (switch1 == 6)
 		{
 		System.out.println("Are you sure you want to exit?  yes / no");
 		String exitt = sr.next();
@@ -221,6 +228,7 @@ public class Main {
 		}
 
 	}
+
 		}
 	}
 }

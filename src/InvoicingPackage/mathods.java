@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -527,6 +529,68 @@ public class mathods {
 
 		}
 	}
+	
+	public static void findInvoice()
+
+	      throws IOException, InterruptedException {
+		 String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=invoice;" + "encrypt=true;"
+		 + "trustServerCertificate=true";
+		 String user = "sa";
+		 String pass = "root";
+		 Scanner sr = new Scanner(System.in);
+		 Connection con = null;
+		 try {
+		 Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+		 DriverManager.registerDriver(driver);
+		 con = DriverManager.getConnection(url, user, pass);
+		 System.out.println("Please Enter the Invoice ID:");
+		 int invoiceID = sr.nextInt();
+		 String sql = "SELECT * FROM Invoices WHERE Invoice_Id=?";
+		 PreparedStatement ps = con.prepareStatement(sql);
+		 ps.setInt(1, invoiceID);
+		 ResultSet rs = ps.executeQuery();
+		 if (!rs.next()) {
+		 System.out.println("Invoice Not Found");
+		 } else {
+		 System.out.println("Invoice Details:");
+		 System.out.println(
+		 "--------------------------------------------------------------------------------------------------------------------------------");
+		 System.out.println(
+		 "Invoice ID\tCustomer ID\tInvoice Date\tNumber of Items\tTotal Amount\tPaid Amount\ttotal Balance");
+		 System.out.println(
+		 "--------------------------------------------------------------------------------------------------------------------------------");
+		 // Print the details of the invoice
+		 do {
+		 int invoiceId = rs.getInt("Invoice_Id");
+		 int customerId = rs.getInt("Customer_Id");
+		 String invoiceDate = rs.getString("Invoice_Date");
+		 int itemsNumber = rs.getInt("Number_Of_Items");
+		 double total_Amount = rs.getInt("total_Amount");
+		 double paidAmount = rs.getFloat("paid_Amount");
+		 double totkal_Balance = rs.getFloat("totkal_Balance");
+		 System.out.println(invoiceId + "\t\t" + customerId + "\t\t" + invoiceDate + "\t\t" + itemsNumber
+		 + "\t\t" + total_Amount + "\t\t" + paidAmount + "\t\t" + totkal_Balance);
+		 System.out.println(
+		 "--------------------------------------------------------------------------------------------------------------------------------");
+		 } while (rs.next());
+		 }
+		 } catch (Exception ex) {
+		 System.err.println(ex);
+		 } finally {
+		 if (con != null) {
+		 try {
+		 con.close();
+		 } catch (SQLException e) {
+		 System.err.println(e);
+		 }
+		 }
+		 }
+			}
+
+//	System.out.println("Enter the paid amount ");
+//	double paidAmount = sr.nextDouble();
+//	System.out.println("Enter the total balance");
+//	double totalbalance = sr.nextDouble();
 	
 	/////////////////////////////////////////////////////////////////////InvoicingSystem///////////////////////////////////////////////////////////
 	public void invoiceDate()
