@@ -36,7 +36,7 @@ public class Main {
 
 
 		 }
-
+		 boolean hasPerformedAction = false;
 
 
 		System.out.println("====================  Invoicing System  =========================");
@@ -88,8 +88,8 @@ public class Main {
 				boolean manu2 = true;
 				while (manu2) {
 					System.out.println("1. Add Items & customer");
-					System.out.println("2. Delete Items");
-					System.out.println("3. update Item Price");
+					System.out.println("2. Delete Items or customer");
+					System.out.println("3. update Item Price  or Customer Phone number");
 					System.out.println("4. Report: All Invoices");
 					System.out.println("5. Report: Statistics)");
 					System.out.println("6. addInvoiceItems");
@@ -102,11 +102,52 @@ public class Main {
 						mathod.addInvoice();
 						break;
 					case 2:
-						mathod.deletDataBase();
-						break;
-
+						boolean deleteCondation = true ;
+						while(deleteCondation)
+						{
+						System.out.println("Select what you want to delete");
+						System.out.println("1. Delete Items");
+						System.out.println("2. Delete Customer");
+						System.out.println("3. Back");
+						int chosee = sr.nextInt();
+						if(chosee == 1)
+						{
+						mathod.deletDataBaseItems();
+						}
+						else if (chosee == 2)
+						{
+					    mathod.deletDataBaseCustomer();
+						}
+						else if (chosee == 3)
+						{
+							deleteCondation = false ;
+						}
+						}
+					break;
+					
+					
 					case 3:
+						boolean updateCondation = true ;
+						while (updateCondation)
+						{
+						System.out.println("Select what you want to update");
+						System.out.println("1. update the price");
+						System.out.println("2. update the customer phone number");
+						System.out.println("3. Back");
+						int newUpdate = sr.nextInt();
+						if (newUpdate == 1)
+						{
 						mathod.updateDataBsePrice();
+						}
+						else if (newUpdate == 2)
+						{
+							mathod.updateDataBseCustomerPhone();
+						}
+						else if (newUpdate == 3)
+						{
+							updateCondation = false ;
+						}
+						}
 						break;
 
 					case 4:
@@ -141,7 +182,17 @@ public class Main {
 			
 			else if(switch1 == 3)
 			{
-				mathod.createTables();
+				
+		          if (switch1 == 3 && !hasPerformedAction) { // perform action only if user input is 1 and action has not been performed already
+		        	  mathod.createTables();
+			          System.out.println("Performing action...");
+			          hasPerformedAction = true; // set flag to true to indicate that action has been performed
+			        } 
+		          else 
+			        {
+			            System.out.println("Action cannot be performed again.");
+			        }	
+				
 				break;
 			}
 			
