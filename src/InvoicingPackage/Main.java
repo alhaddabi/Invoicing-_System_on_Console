@@ -60,18 +60,19 @@ public class Main {
 					int choose = sr.nextInt();
 					switch (choose) {
 					case 1:
-						int count = 1;
-						System.out.println("======================= Invoices " + count
-								+ "==========================================");
-						mathod.printInvoicingHeader();
-						mathod.printCustomerName();
-						mathod.print();
-						mathod.printShopDetails();
-						count++;
+//						int count = 1;
+//						System.out.println("======================= Invoices " + count
+//								+ "==========================================");
+//						mathod.printInvoicingHeader();
+//						mathod.printCustomerName();
+//						mathod.print();
+//						mathod.printShopDetails();
+						mathod.loadDataFormInvoiceItems();
+						mathod.loadDAataFromInvoice();
+//						count++;
 						break;
 
 					case 2:
-						
 						mathod.AddshopDetails();
 						break;
 					case 3:
